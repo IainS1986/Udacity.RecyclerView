@@ -110,12 +110,11 @@ class SleepTrackerFragment : Fragment() {
         })
 
         // Add an Observer on the nights list and update recyclerview adapter
-        sleepTrackerViewModel.nights.observe(this, Observer { nights ->
-            if (nights != null) {
-                adapter.submitList(nights)
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.addHeaderAndSubmitList(it)
             }
         })
-
 
         // Add an Observer to monitor the navigation to sleep details in onClick events
         sleepTrackerViewModel.navigateToSleepDataQuality.observe(this, Observer { nightId ->
