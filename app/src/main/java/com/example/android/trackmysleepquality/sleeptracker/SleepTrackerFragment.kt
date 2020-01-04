@@ -66,7 +66,7 @@ class SleepTrackerFragment : Fragment() {
                         this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
         adapter = SleepNightAdapter(SleepNightAdapter.SleepNightListener {
-            nightId -> Toast.makeText(context, "${nightId}", Toast.LENGTH_SHORT).show()
+            nightId -> sleepTrackerViewModel.onSleepNightClicked(nightId)
         })
         manager = GridLayoutManager(activity, 3)
 
@@ -113,6 +113,16 @@ class SleepTrackerFragment : Fragment() {
         sleepTrackerViewModel.nights.observe(this, Observer { nights ->
             if (nights != null) {
                 adapter.submitList(nights)
+            }
+        })
+
+
+        // Add an Observer to monitor the navigation to sleep details in onClick events
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(this, Observer { nightId ->
+            nightId?.let {
+                this.findNavController()
+                        .navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepDetailFragment(nightId))
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
             }
         })
 
