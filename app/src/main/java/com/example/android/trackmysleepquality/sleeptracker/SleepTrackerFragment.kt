@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -40,6 +41,7 @@ import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
 class SleepTrackerFragment : Fragment() {
 
     private lateinit var adapter : SleepNightAdapter
+    private lateinit var manager : GridLayoutManager
 
     /**
      * Called when the Fragment is ready to display content to the screen.
@@ -63,8 +65,10 @@ class SleepTrackerFragment : Fragment() {
                 ViewModelProviders.of(
                         this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
-        adapter = SleepNightAdapter()
-        val manager = GridLayoutManager(activity, 3)
+        adapter = SleepNightAdapter(SleepNightAdapter.SleepNightListener {
+            nightId -> Toast.makeText(context, "${nightId}", Toast.LENGTH_SHORT).show()
+        })
+        manager = GridLayoutManager(activity, 3)
 
         binding.sleepList.adapter = adapter
         binding.sleepList.layoutManager = manager
