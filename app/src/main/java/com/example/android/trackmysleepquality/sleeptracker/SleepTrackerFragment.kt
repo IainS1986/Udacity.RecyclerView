@@ -29,6 +29,7 @@ import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -36,6 +37,8 @@ import com.google.android.material.snackbar.Snackbar
  * (Because we have not learned about RecyclerView yet.)
  */
 class SleepTrackerFragment : Fragment() {
+
+    private lateinit var adapter : SleepNightAdapter
 
     /**
      * Called when the Fragment is ready to display content to the screen.
@@ -59,8 +62,10 @@ class SleepTrackerFragment : Fragment() {
                 ViewModelProviders.of(
                         this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
-        binding.sleepTrackerViewModel = sleepTrackerViewModel
+        adapter = SleepNightAdapter()
 
+        binding.sleepList.adapter = adapter
+        binding.sleepTrackerViewModel = sleepTrackerViewModel
         binding.setLifecycleOwner(this)
 
         // Add an Observer on the state variable for showing a Snackbar message
@@ -94,6 +99,13 @@ class SleepTrackerFragment : Fragment() {
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 sleepTrackerViewModel.doneNavigating()
+            }
+        })
+
+        // Add an Observer on the nights list and update recyclerview adapter
+        sleepTrackerViewModel.nights.observe(this, Observer { nights ->
+            if (nights != null) {
+                adapter.data = nights
             }
         })
 
