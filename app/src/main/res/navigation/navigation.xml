@@ -32,12 +32,16 @@
             android:id="@+id/action_sleepTrackerFragment_to_sleepQualityFragment"
             app:destination="@id/sleep_quality_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popEnterAnim="@anim/slide_in_right" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_sleep_tracker_fragment_to_sleepDetailFragment"
             app:destination="@id/sleep_detail_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popEnterAnim="@anim/slide_in_right" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -51,7 +55,9 @@
         <action
             android:id="@+id/action_sleepQualityFragment_to_sleepTrackerFragment"
             app:destination="@id/sleep_tracker_fragment"
+            app:enterAnim="@anim/slide_in_left"
             app:launchSingleTop="false"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpTo="@+id/sleep_tracker_fragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -66,7 +72,9 @@
         <action
             android:id="@+id/action_sleepDetailFragment_to_sleep_tracker_fragment"
             app:destination="@id/sleep_tracker_fragment"
+            app:enterAnim="@anim/slide_in_left"
             app:launchSingleTop="false"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpTo="@+id/sleep_tracker_fragment"
             app:popUpToInclusive="true" />
     </fragment>
