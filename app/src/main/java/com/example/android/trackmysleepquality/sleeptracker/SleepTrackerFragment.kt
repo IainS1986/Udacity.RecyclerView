@@ -105,7 +105,7 @@ class SleepTrackerFragment : Fragment() {
         // Add an Observer on the nights list and update recyclerview adapter
         sleepTrackerViewModel.nights.observe(this, Observer { nights ->
             if (nights != null) {
-                adapter.data = nights
+                adapter.submitList(nights)
             }
         })
 
